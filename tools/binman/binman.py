@@ -67,13 +67,13 @@ def RunTests(debug, args):
             suite = unittest.TestLoader().loadTestsFromTestCase(module)
         suite.run(result)
 
-    print result
+    print(result)
     for test, err in result.errors:
-        print test.id(), err
+        print(test.id(), err)
     for test, err in result.failures:
-        print err, result.failures
+        print(err, result.failures)
     if result.errors or result.failures:
-      print 'binman tests FAILED'
+      print('binman tests FAILED')
       return 1
     return 0
 
@@ -84,15 +84,15 @@ def GetEntryModules(include_testing=True):
         Set of paths to entry class filenames
     """
     glob_list = glob.glob(os.path.join(our_path, 'etype/*.py'))
-    return set([os.path.splitext(os.path.basename(item))[0]
+    return {os.path.splitext(os.path.basename(item))[0]
                 for item in glob_list
-                if include_testing or '_testing' not in item])
+                if include_testing or '_testing' not in item}
 
 def RunTestCoverage():
     """Run the tests and check that we get 100% coverage"""
     glob_list = GetEntryModules(False)
-    all_set = set([os.path.splitext(os.path.basename(item))[0]
-                   for item in glob_list if '_testing' not in item])
+    all_set = {os.path.splitext(os.path.basename(item))[0]
+                   for item in glob_list if '_testing' not in item}
     test_util.RunTestCoverage('tools/binman/binman.py', None,
             ['*test*', '*binman.py', 'tools/patman/*', 'tools/dtoc/*'],
             options.build_dir, all_set)
@@ -125,9 +125,9 @@ def RunBinman(options, args):
         try:
             ret_code = control.Binman(options, args)
         except Exception as e:
-            print 'binman: %s' % e
+            print('binman: %s' % e)
             if options.debug:
-                print
+                print()
                 traceback.print_exc()
             ret_code = 1
     return ret_code
