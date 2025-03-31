@@ -49,23 +49,23 @@ def RunTestCoverage(prog, filter_fname, exclude_list, build_dir, required=None):
     lines = stdout.splitlines()
     if required:
         # Convert '/path/to/name.py' just the module name 'name'
-        test_set = set([os.path.splitext(os.path.basename(line.split()[0]))[0]
-                        for line in lines if '/etype/' in line])
+        test_set = {([os.path.splitext(os.path.basename(line.split()[0]))[0]
+                        for line in lines if '/etype/' in line])}
         missing_list = required
         missing_list.difference_update(test_set)
         if missing_list:
-            print 'Missing tests for %s' % (', '.join(missing_list))
-            print stdout
+            print('Missing tests for %s' % (', '.join(missing_list)))
+            print(stdout)
             ok = False
 
     coverage = lines[-1].split(' ')[-1]
     ok = True
-    print coverage
+    print(coverage)
     if coverage != '100%':
-        print stdout
-        print ("Type 'python-coverage html' to get a report in "
+        print(stdout)
+        print("Type 'python-coverage html' to get a report in "
                'htmlcov/index.html')
-        print 'Coverage error: %s, but should be 100%%' % coverage
+        print('Coverage error: %s, but should be 100%%' % coverage)
         ok = False
     if not ok:
         raise ValueError('Test coverage failure')
