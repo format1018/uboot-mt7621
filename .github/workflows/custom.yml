@@ -95,9 +95,6 @@ jobs:
           sudo rm /usr/bin/python
           sudo ln -s /usr/bin/python3 /usr/bin/python
 
-      - name: Set up Python 2
-        run: sudo apt-get install python2
-
       - name: Download OpenWrt toolchain
         run: |
           wget -O - https://github.com/DragonBluep/uboot-mt7621/releases/download/20230517/openwrt-toolchain-ramips-mt7621_gcc-12.3.0_musl.Linux-x86_64.tar.xz \
